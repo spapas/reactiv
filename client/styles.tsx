@@ -2,7 +2,7 @@ import {css} from "@linaria/core";
 
 import * as CSS from "csstype";
 
-import "@client/fonts.css";
+import "./fonts.css";
 
 type Styles = CSS.Properties<string | number> & {
     $mobile?: CSS.Properties<string | number>;

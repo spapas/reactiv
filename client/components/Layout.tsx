@@ -1,9 +1,9 @@
 import React from "react";
 
-import {Context} from "@reactivated";
+import {Context} from "reactivated";
 import {Helmet} from "react-helmet-async";
 
-import * as styles from "@client/styles";
+import * as styles from "../styles";
 
 styles.globalStyles();
 

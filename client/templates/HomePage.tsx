@@ -1,6 +1,6 @@
 import React from "react";
 
-import {templates} from "@reactivated";
+import {templates} from "reactivated";
 import {Helmet} from "react-helmet-async";
 
 import {css, cx} from "@linaria/core";
@@ -8,10 +8,9 @@ import {styled} from "@linaria/react";
 
 import outdent from "outdent";
 
-import {Code} from "@client/components/Code";
-import {Layout} from "@client/components/Layout";
-import * as forms from "@client/forms";
-import * as styles from "@client/styles";
+import {Layout} from "../components/Layout";
+import * as forms from "../forms";
+import * as styles from "../styles";
 
 const Highlight = styled.div`
     ${styles.style({
@@ -322,41 +321,7 @@ export default (props: templates.HomePage) => (
                         }}
                     `}
                 >
-                    <Code language="python">
-                        {outdent`
-                            from django.http import HttpRequest, HttpResponse
-                            from django.shortcuts import redirect
-
-                            from . import forms, templates
-
-                            def home_page(request: HttpRequest) -> HttpResponse:
-                                form = forms.SignUpForm(request.POST or None)
-                                if form.is_valid():
-                                    form.save()
-                                    return redirect("profile")
-
-                                return templates.HomePage(form=form).render(request)
-                        `}
-                    </Code>
-                    <Code language="tsx">
-                        {outdent`
-                            import React from "react";
-                            import {CSRFToken, Form, templates} from "@reactivated";
-
-                            import {Layout} from "@client/components/Layout";
-
-                            export default (props: templates.HomePage) => (
-                                <Layout title="Sign Up">
-                                    <h1>Sign Up</h1>
-                                    <form method="POST">
-                                        <CSRFToken />
-                                        <Form as="p" form={props.form} />
-                                        <button type="submit">Submit</button>
-                                    </form>
-                                </Layout>
-                            );
-                        `}
-                    </Code>
+                    
                 </div>
             </div>
         </div>
@@ -452,81 +417,9 @@ export default (props: templates.HomePage) => (
                         Use idiomatic Django. As it was meant to be used: with forms,
                         form sets, views and transactional logic.
                     </p>
-                    <Code language="python">
-                        {outdent`
-                            @transaction.atomic
-                            def checkout(request: HttpRequest) -> HttpResponse:
-                                registration_form = forms.RegistrationForm(request.POST or None)
-                                credit_card_form = forms.CreditCardForm(request.POST or None)
-                                cart_form_set = forms.CardFormSet(request.POST or None)
-
-                                if (
-                                    registration_form.is_valid()
-                                    and credit_card_form.is_valid()
-                                    and cart_form_set.is_valid()
-                                ):
-                                    user = registration_form.save(commit=False)
-                                    user.credit_card = credit_card_form.save()
-                                    user.save()
-
-                                    for item in cart_form_set.save(commit=False):
-                                        item.user = user
-                                        item.save()
-                                    return redirect("order_history")
-
-                                return templates.Checkout(
-                                    registration_form=registration_form,
-                                    cart_form_set=cart_form_set,
-                                    credit_card_form=credit_card_form,
-                                ).render(request)
-                        `}
-                    </Code>
+                    
                 </div>
-                <Highlight>
-                    <div>
-                        <h2>React is your template engine</h2>
-                        <p>Django is great.</p>
-                        <p>
-                            But writing type-safe components with React is a dream come
-                            true.
-                        </p>
-                        <p>Leverage the full React ecosystem.</p>
-                    </div>
-                    <Code language="tsx">
-                        {outdent`
-                            import React from "react";
-                            import Select from "react-select";
-
-                            const flavors = [
-                                {value: "chocolate", label: "Chocolate"},
-                                {value: "strawberry", label: "Strawberry"},
-                                {value: "vanilla", label: "Vanilla"},
-                            ];
-
-                            export const Flavor = () => <Select options={flavors} />;`}
-                    </Code>
-                </Highlight>
-                <Highlight>
-                    <Code language="python">
-                        {outdent`
-                            class LoginForm(forms.Form):
-                                email = forms.EmailField()
-                                password = forms.PasswordField()
-
-                            @template
-                            class Login(NamedTuple):
-                                form: forms.LoginForm
-                        `}
-                    </Code>
-                    <div>
-                        <h2>Type safety — everywhere</h2>
-                        <p>All roads lead to types. So embrace them.</p>
-                        <p>
-                            Type your Django code, and all of your React templates will
-                            be typed automatically.
-                        </p>
-                    </div>
-                </Highlight>
+                
                 <Highlight>
                     <div>
                         <h2>Easily add dynamic behavior</h2>
@@ -544,31 +437,7 @@ export default (props: templates.HomePage) => (
                             ${styles.style({})}
                         `}
                     >
-                        <Code language="python">{outdent`
-                        class WireForm(forms.Form):
-                            account_number = forms.CharField()
-                            has_instructions = forms.BooleanField()
-                            instructions = forms.TextField()
-                    `}</Code>
-                        <Code language="tsx">{outdent`
-                        import React from "react";
-
-                        import {CSRFToken, useForm, Form} from "@reactivated";
-
-                        export const WireForm = (props: Props) => {
-                            const form = useForm(props.form);
-                            const fields =
-                                form.values.has_instructions === true
-                                    ? ["account", "has_instructions", "instructions"]
-                                    : ["account", "has_instructions"];
-
-                            return <form method="POST">
-                                <CSRFToken />
-                                <Form handler={form} as="p" fields={fields} />
-                                <button type="submit">Send wire</button>
-                            </>;
-                        };
-                    `}</Code>
+                        
                     </div>
                 </Highlight>
                 <div

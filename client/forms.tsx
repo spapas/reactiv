@@ -1,11 +1,11 @@
 import React from "react";
 
-import {FieldHandler, Widget} from "@reactivated";
+import {FieldHandler, Widget} from "reactivated";
 
 import {css} from "@linaria/core";
 import {styled} from "@linaria/react";
 
-import * as styles from "@client/styles";
+import * as styles from "./styles";
 
 export {useFormSet, ManagementForm} from "reactivated/forms";
 
